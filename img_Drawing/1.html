@@ -71,14 +71,19 @@
             imgs.prototype.eventHandle = function(ele)
             {
                 var that = this;
-                ele.mouseenter(function() {
+                var timeId = 0;
+                ele.mouseover(function() {
+                    var isThat = $(this);
                     //判断是否存在自动播放标记
-                    clearInterval(that.flag);
-                    var index = $(this).index();
-                    setTimeout(function(){
+                    clearTimeout(timeId);
+                    timeId = setTimeout(function(){
+                        clearInterval(that.flag);
+                        var index = isThat.index();
                         that.switchImg(index)
-                    },200);
-                }).mouseleave(function(){
+                    },350)
+
+                }).mouseout(function(){
+                    clearTimeout(timeId);
                     var index = $(this).index();
                     that.autoRun();
                 });
@@ -92,13 +97,14 @@
                 var cImg  = this.imgLis.eq(menuIndex);
                 var cMenu = this.btnLis.eq(menuIndex);
                 cMenu.addClass('active').siblings().removeClass('active');
-                cImg.stop().fadeIn('fast').siblings().hide();
+                cImg.stop().fadeIn('fast').siblings().fadeOut();
                 console.log(this.cindex);
             }
 
             //自动播放
             imgs.prototype.autoRun = function(){
                 var that = this;
+                clearInterval(this.flag);
                 this.flag = setInterval(function(){
                     that.cindex++;
                     if(that.cindex>that.maxIndex)

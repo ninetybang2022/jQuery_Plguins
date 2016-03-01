@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style media="screen">
+        *{padding:0px;margin:0px;box-sizing:border-box;}
+        li{list-style:none;}
+        .btns{
+            float:left;
+            height:40px;
+            margin-top:300px;
+        }
+        .btns li{
+            width:20px;
+            margin:0 10px;
+            float:left;
+            height:20px;
+            border-radius: 50%;
+            background: #000;
+        }
+        .btns li.active{background:#888;}
+        .imgul{
+            float:left;
+            position: relative;
+        }
+        .imgul li{
+            position: absolute;
+            display:none;
+        }
+        .imgul li:first-child{
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <ul class="imgul">
+        <li><img src="1.jpg" alt="" /></li>
+        <li><img src="2.jpg" alt="" /></li>
+        <li><img src="3.jpg" alt="" /></li>
+    </ul>
+    <ul class="btns">
+        <li class="active"></li>
+        <li></li>
+        <li></li>
+    </ul>
+    <script type="text/javascript" src="./jquery.min.js"></script>
+    <script type="text/javascript">
+    !(function($){
+
+            //构造函数
+            var imgs = function(opt){
+                this.imgId = $(opt.imgArea);
+                this.btns = $(opt.listBtn);
+                this.time = opt.time;  //每多少秒走一次
+                this.btnLis = this.btns.find('li');
+                this.imgLis = this.imgId.find('li');
+                this.cindex = 0;
+                this.maxIndex = this.imgLis.length-1;
+                this.flag; //计时器
+            }
+
+            //给按钮绑定事件
+            imgs.prototype.bindEvent = function(){
+
+                this.eventHandle(this.btnLis);
+                this.eventHandle(this.imgLis);
+            }
+
+            //事件
+            imgs.prototype.eventHandle = function(ele)
+            {
+                var that = this;
+                ele.mouseenter(function() {
+                    //判断是否存在自动播放标记
+                    clearInterval(that.flag);
+                    var index = $(this).index();
+                    setTimeout(function(){
+                        that.switchImg(index)
+                    },200);
+                }).mouseleave(function(){
+                    var index = $(this).index();
+                    that.autoRun();
+                });
+            }
+
+            //切换图片
+            imgs.prototype.switchImg =  function(menuIndex)
+            {
+                //当前走到第几张图片
+                this.cindex = menuIndex;
+                var cImg  = this.imgLis.eq(menuIndex);
+                var cMenu = this.btnLis.eq(menuIndex);
+                cMenu.addClass('active').siblings().removeClass('active');
+                cImg.stop().fadeIn('fast').siblings().hide();
+                console.log(this.cindex);
+            }
+
+            //自动播放
+            imgs.prototype.autoRun = function(){
+                var that = this;
+                this.flag = setInterval(function(){
+                    that.cindex++;
+                    if(that.cindex>that.maxIndex)
+                    {
+                        that.cindex = 0;
+                    }
+                    that.switchImg(that.cindex);
+
+                },that.time);
+            }
+
+            //初始化方法
+            imgs.prototype.run = function(){
+                this.bindEvent();
+                this.autoRun();
+            }
+
+            $.fn.imgRuning = function(opt){
+                var dopt = {
+                    'imgArea':opt.imgArea,
+                    'time':opt.time,
+                    'listBtn':$(this)
+                }
+                var igs = new imgs(dopt);
+                igs.run();
+                return this;
+            }
+
+        })(jQuery);
+        $('.btns').imgRuning({
+            'imgArea':'.imgul',
+            'time':5000
+        });
+    </script>
+</body>
+</html>

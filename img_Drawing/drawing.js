@@ -37,8 +37,9 @@
              var timeId = 0;
              ele.mouseover(function() {
                  var isThat = $(this);
-                 //判断是否存在自动播放标记
+                 //判断是否存在自动播放标记 防止事件叠加 防止鼠标快速移动叠加事件
                  clearTimeout(timeId);
+                 //设置定时器，当鼠标放在按钮上350毫秒后进行图片的切换
                  timeId = setTimeout(function(){
                      clearInterval(that.flag);
                      var index = isThat.index();
@@ -46,6 +47,7 @@
                  },350)
 
              }).mouseout(function(){
+                 //当移开时清除事件
                  clearTimeout(timeId);
                  var index = $(this).index();
                  that.autoRun();
@@ -61,12 +63,12 @@
              var cMenu = this.btnLis.eq(menuIndex);
              cMenu.addClass('active').siblings().removeClass('active');
              cImg.stop().fadeIn('fast').siblings().fadeOut();
-             console.log(this.cindex);
          }
 
          //自动播放
          imgs.prototype.autoRun = function(){
              var that = this;
+             //防止叠加清除一次再添加一次
              clearInterval(this.flag);
              this.flag = setInterval(function(){
                  that.cindex++;

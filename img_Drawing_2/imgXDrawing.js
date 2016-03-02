@@ -10,6 +10,7 @@
                   width:每次运动多少个像素
                   speed:轮播速度
                   time:自动轮播时间间隔
+                  autorun: //是否启动自动轮播
       */
      var defaultOpt = {
              prevBtn:'.prev',
@@ -17,6 +18,7 @@
              innerWrap:'.imglist',
              width:'880',
              speed:450,
+             autoRun:true,
              time:5000
      }
 
@@ -154,12 +156,19 @@
      //绑定事件
      imgXDrawing.prototype.addEvent = function()
      {
+         //自动将第一张轮播图放到最中间
          this.autoCenter();
+         //注册左按钮
          this.leftRun();
+         //注册右按钮
          this.rightRun();
-         this.autoRun();
-         //注册当鼠标移动上，清除叠加
-         this.clearAutoRun();
+         //启动自动轮播
+         if(this.options.autoRun)
+         {
+            this.autoRun();
+            //注册当鼠标移动上，清除叠加
+            this.clearAutoRun();
+         }
      }
 
 

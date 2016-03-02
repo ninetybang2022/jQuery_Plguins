@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style media="screen">
+        *{padding:0px;margin:0px;box-sizing:border-box;}
+        .wrap{
+            width:1140px;
+            height:200px;
+            overflow: hidden;
+            margin:0 auto;
+            background:#f1f1f1;
+            position: relative;
+        }
+        li{list-style: none;}
+        .inner{
+            width:9999px;
+            position: absolute;
+            left:130px;
+            height:200px;
+            margin:0 auto;
+            background:#999;
+            z-index:999;
+        }
+        .wrap .prev,.wrap .next{
+            position:absolute;
+            width:130px;
+            height:200px;
+            font-size:50px;
+            color:#f1f1f1;
+            text-decoration: none;
+            text-align: center;
+            line-height: 200px;
+            background:rgba(0,0,0,0.4);
+            z-index:1000;
+            font-weight: 700;
+        }
+        .wrap .prev{left:0px;}
+        .wrap .next{right:0px;}
+        .ullist{
+            position: absolute;
+            /*left: -880px;*/
+        }
+        .ullist li{
+            width:880px;height:200px;float:left;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <a href="javascript:;" class="prev"><</a>
+        <div class="inner">
+            <ul class="ullist">
+                <!-- 第一个轮播图是最后一张 -->
+                <li><img src="./3.jpg" alt="" /></li>
+                <!-- 默认第一张轮播图从第二个元素开始 -->
+                <li><img src="./1.jpg" alt="" /></li>
+                <li><img src="./2.jpg" alt="" /></li>
+                <li><img src="./3.jpg" alt="" /></li>
+                <!-- 最后一个元素为第一个轮播图 -->
+                <li><img src="./1.jpg" alt="" /></li>
+            </ul>
+        </div>
+        <a href="javascript:;" class="next">></a>
+    </div>
+    <script type="text/javascript" src="./jquery.min.js"></script>
+    <script type="text/javascript" src="./imgXDrawing.js"></script>
+    <script type="text/javascript">
+        $('.wrap').imgXDrawing({
+            prevBtn:'.prev',
+            nextBtn:'.next',
+            innerWrap:'.ullist',
+            width:'880',
+            time:5000
+        })
+    </script>
+</body>
+</html>

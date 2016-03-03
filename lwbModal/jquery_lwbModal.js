@@ -26,13 +26,17 @@
         //内部需要模态的内容元素
         this.modalInnerBox = this.innerObj.addClass('modal-inner-box').clone(true);
 
+
         //
     }
 
     //创建模态框背景对象
     lwbModal.prototype._createModalView = function()
     {
-        return $('<div>',{id:this.options.wrapModalBox}).html($('<div>',{"class":this.options.modalBg}));
+        //当前整个页面的高
+        var bodyHeight = $('html').height();
+        return $('<div>',{id:this.options.wrapModalBox,style:"height:"+bodyHeight+'px;"'})
+                .html($('<div>',{"class":this.options.modalBg,style:"height:"+bodyHeight+'px;"'}));
     }
 
 

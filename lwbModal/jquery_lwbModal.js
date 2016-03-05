@@ -34,7 +34,7 @@
     lwbModal.prototype._createModalView = function()
     {
         //当前整个页面的高
-        var bodyHeight = $('html').height();
+        var bodyHeight = document.documentElement.clientHeight;
         return $('<div>',{id:this.options.wrapModalBox,style:"height:"+bodyHeight+'px;"'})
                 .html($('<div>',{"class":this.options.modalBg,style:"height:"+bodyHeight+'px;"'}));
     }

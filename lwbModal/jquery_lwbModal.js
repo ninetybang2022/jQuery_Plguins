@@ -34,9 +34,17 @@
     lwbModal.prototype._createModalView = function()
     {
         //当前整个页面的高
-        var bodyHeight = document.documentElement.clientHeight;
-        return $('<div>',{id:this.options.wrapModalBox,style:"height:"+bodyHeight+'px;"'})
-                .html($('<div>',{"class":this.options.modalBg,style:"height:"+bodyHeight+'px;"'}));
+        var _docHeight = document.documentElement.clientHeight;
+        var _htmlHeight = $('html').height();
+		var _height;
+       	if(_htmlHeight>_docHeight)
+       	{
+       		_height = _htmlHeight;
+       	}else{
+       		_height = _docHeight;
+       	}
+        return $('<div>',{id:this.options.wrapModalBox,style:"height:"+_height+'px;"'})
+                .html($('<div>',{"class":this.options.modalBg,style:"height:"+_height+'px;"'}));
     }
 
 

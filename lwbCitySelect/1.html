@@ -9,11 +9,15 @@
     </style>
 </head>
 <body>
-    <div id="citys"></div>
+    <div id="cityarea"></div>
+    <button id="show">show</button>
     <script type="text/javascript" src="./jquery.min.js"></script>
     <script type="text/javascript" src="./jquery_lwbCitySelector.js"></script>
     <script type="text/javascript">
-        $('#citys').lwbCitySelector();
-    </script>
+        $('#cityarea').lwbCitySelector();
+        $('#show').click(function(){
+            console.log($.getSelectorCity().getFinalObj());
+        })
+    </script>   
 </body>
 </html>
